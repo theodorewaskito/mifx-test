@@ -15,8 +15,8 @@ const styleText = {
   },
   Title: {
     Large: "text-[20px] font-medium leading-[24px]",
-    Medium: "",
-    Small: "",
+    Medium: "text-[16px] font-medium leading-[20px]",
+    Small: "text-[14px] font-medium leading-[20px]",
   },
   Label: {
     Large: "text-sm font-medium leading-[20px]",

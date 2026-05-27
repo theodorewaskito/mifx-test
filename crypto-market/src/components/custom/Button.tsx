@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import Text from "./Text";
 import { Button as ButtonUI } from "@/components/ui/button"
 
-export interface IButton {
+interface IButton {
   type?: "button" | "submit" | "reset";
   children: ReactNode | string;
   className?: string;
