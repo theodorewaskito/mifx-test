@@ -15,7 +15,7 @@ export default function Login() {
         />
       </div>
       <div className="flex flex-col items-center justify-center">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-[516px]">
           <div>
               <Text
                 type="Header"
@@ -33,6 +33,8 @@ export default function Login() {
                 label="Email"
                 type="email"
                 placeholder="username@gmail.com"
+                noteButton="Sign In with Phone Number"
+                required
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -41,6 +43,7 @@ export default function Login() {
                 label="Password"
                 type="password"
                 placeholder="Enter your password"
+                // error="Password is required"
               />
               <a href="">
                 <Text
