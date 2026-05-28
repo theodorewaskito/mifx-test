@@ -1,6 +1,6 @@
-import Text from "@/components/custom/Text";
-import BannerImage from "@/components/OTP/BannerImage";
-import FormOtp from "@/components/OTP/FormOtp";
+import Text from "@/components/common/Text";
+import BannerImage from "@/components/auth/otp/OtpBanner";
+import FormOtp from "@/components/auth/otp/OtpForm";
 
 export default function Otp() {
 

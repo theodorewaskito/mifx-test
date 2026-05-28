@@ -7,7 +7,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
-import Button from "../custom/Button";
+import Button from "../../common/Button";
 
 export default function FormOtp() {
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Input from "../custom/Input";
+import Input from "../form/Input";
 import { Eye, EyeClosed } from 'lucide-react';
 
 export default function InputPassword() {

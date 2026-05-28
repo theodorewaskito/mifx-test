@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image";
-import Text from "../custom/Text";
+import Text from "../common/Text";
 
 interface ICard {
   data: {

@@ -1,5 +1,5 @@
 import { InputHTMLAttributes, forwardRef } from "react";
-import Text from "@/components/custom/Text";
+import Text from "@/components/common/Text";
 import { Input as InputUI } from "@/components/ui/input"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "../ui/input-group";
 import { Eye } from 'lucide-react';

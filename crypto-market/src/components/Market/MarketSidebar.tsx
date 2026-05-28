@@ -1,6 +1,6 @@
-import Text from "../custom/Text";
-import Input from "../custom/Input";
-import Tabs from "../custom/Tabs";
+import Text from "../common/Text";
+import Input from "../form/Input";
+import Tabs from "../common/Tabs";
 import { Search } from 'lucide-react';
 import MarketCard from "./MarketCard";
 

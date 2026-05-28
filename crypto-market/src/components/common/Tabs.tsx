@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import Text from "./Text";
+import Text from "../common/Text";
 import { Tabs as TabsUI, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator";
 

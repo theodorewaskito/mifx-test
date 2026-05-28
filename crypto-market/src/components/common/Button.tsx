@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Text from "./Text";
+import Text from "@/components/common/Text";
 import { Button as ButtonUI } from "@/components/ui/button"
 
 interface IButton {
