@@ -53,13 +53,15 @@ export default function FormLogin() {
             </div>
             <div className="flex flex-col gap-1">
               <InputPassword/>
-              <a href="">
-                <Text
-                  type="Body"
-                  variant="Medium"
-                  className="text-[#613DE4]"
-                >Forgot Password?</Text>
-              </a>
+              <div>
+                <a href="" className="inline-block hover:underline">
+                  <Text
+                    type="Body"
+                    variant="Medium"
+                    className="text-[#613DE4]"
+                  >Forgot Password?</Text>
+                </a>
+              </div>
             </div>
           </div>
           <div>
