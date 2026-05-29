@@ -1,8 +1,6 @@
 import { InputHTMLAttributes, forwardRef } from "react";
 import Text from "@/components/common/Text";
-import { Input as InputUI } from "@/components/ui/input"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "../ui/input-group";
-import { Eye } from 'lucide-react';
 
 interface InputProps
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -16,11 +14,6 @@ interface InputProps
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, className, trailingIcon, onTrailingIconClick, noteButton, id, onClickNote, ...props }, ref) => {
-    const handleTrailingIconClick = () => {
-      if (onTrailingIconClick) {
-        onTrailingIconClick();
-      }
-    };
 
     return (
       <div className="flex flex-col gap-2">
@@ -35,7 +28,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               >{label}</Text>
             </label>
             {noteButton && (
-              <button 
+              <button
+                type="button"
                 className="cursor-pointer hover:underline"
                 onClick={onClickNote}
               >
@@ -55,7 +49,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           <InputGroup>
             <InputGroupInput
               ref={ref}
-              id={id} 
+              id={id}
+              aria-invalid={!!error}
               {...props}
             />
 
