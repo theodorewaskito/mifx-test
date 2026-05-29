@@ -8,7 +8,7 @@ export const authService = {
   },
 
   verifyOtp: async (data: OtpRequest): Promise<OtpResponse> => {
-    const response = await api.post('/auth/verify-otp', data);
+    const response = await api.post('/auth/otp', data);
     return response.data;
   },
 

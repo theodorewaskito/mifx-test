@@ -83,6 +83,7 @@ export default function LoginForm({
 
       const token = response.data?.token;
 
+      console.log(token);
       if (token) {
         localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, token);
         localStorage.setItem(STORAGE_KEYS.PHONE_NUMBER, response.data?.phone);

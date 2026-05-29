@@ -6,20 +6,13 @@ export async function POST(req: NextRequest) {
 
     const authorization = req.headers.get("authorization");
 
-    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    if (!apiBaseUrl) {
-      console.error("NEXT_PUBLIC_API_BASE_URL tidak ditemukan");
-      return NextResponse.json(
-        { message: "Server configuration error" },
-        { status: 500 }
-      );
-    }
-
-    const response = await fetch(`${apiBaseUrl}/auth/verify-otp`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(authorization ? { Authorization: authorization } : {}),
+    const response = await fetch(
+      "https://fe-technical-assignment.dxtr.asia/api/v1/auth/verify-otp", 
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(authorization ? { Authorization: authorization } : {}),
       },
       body: JSON.stringify(body),
     });
