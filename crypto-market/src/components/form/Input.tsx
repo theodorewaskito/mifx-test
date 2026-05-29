@@ -10,10 +10,11 @@ interface InputProps
   onTrailingIconClick?: () => void;
   noteButton?: string;
   onClickNote?: () => void ;
+  wrapperClassName?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, className, trailingIcon, onTrailingIconClick, noteButton, id, onClickNote, ...props }, ref) => {
+  ({ label, error, wrapperClassName, className, trailingIcon, onTrailingIconClick, noteButton, id, onClickNote, ...props }, ref) => {
 
     return (
       <div className="flex flex-col gap-2">
@@ -46,7 +47,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
 
         <div className="relative">
-          <InputGroup>
+          <InputGroup className={wrapperClassName}>
             <InputGroupInput
               ref={ref}
               id={id}

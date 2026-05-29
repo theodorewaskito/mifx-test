@@ -1,25 +1,18 @@
-import axios from 'axios';
 import { LoginRequest, LoginResponse, OtpRequest, OtpResponse } from '@/types';
-
-const client = axios.create({
-  baseURL: '/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import { api } from './api';
 
 export const authService = {
   login: async (data: LoginRequest): Promise<LoginResponse> => {
-    const response = await client.post('/auth/login', data);
+    const response = await api.post('/auth/login', data);
     return response.data;
   },
 
   verifyOtp: async (data: OtpRequest): Promise<OtpResponse> => {
-    const response = await client.post('/auth/verify-otp', data);
+    const response = await api.post('/auth/verify-otp', data);
     return response.data;
   },
 
   logout: async (): Promise<void> => {
-    await client.post('/auth/logout');
+    await api.post('/auth/logout');
   },
 };

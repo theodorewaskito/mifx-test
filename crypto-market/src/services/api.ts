@@ -3,12 +3,9 @@ import { STORAGE_KEYS } from "@/constants/storage-key";
 import { env } from "process";
 
 export const api = axios.create({
-  baseURL:
-    env.NEXT_PUBLIC_API_BASE_URL,
-
+  baseURL: "/api",
   headers: {
-    "Content-Type":
-      "application/json",
+    'Content-Type': 'application/json',
   },
 });
 

@@ -1,13 +1,12 @@
 "use client"
 
-import { useState } from "react";
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 import Button from "../../common/Button";
+
 
 export default function FormOtp() {
 
