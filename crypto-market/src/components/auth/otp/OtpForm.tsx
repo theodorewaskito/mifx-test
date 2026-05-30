@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { STORAGE_KEYS } from "@/constants/storage-key";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner"
 
 const otpSchema = z.object({
   otp: z.string()
@@ -39,6 +40,7 @@ export default function FormOtp() {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    reset
   } = useForm<OtpFormValues>({
     resolver: zodResolver(otpSchema),
     defaultValues: {
@@ -60,15 +62,16 @@ export default function FormOtp() {
       });
 
       if (response.data?.success) {
-        // ✅ Token sudah ada dari login, tidak perlu di-set ulang
-        // Langsung redirect
+        localStorage.removeItem(STORAGE_KEYS.PHONE_NUMBER);
         router.push("/");
       }
     } catch (error) {
+      reset()
       if (axios.isAxiosError(error)) {
         const message = error.response?.data?.message;
         if (message) {
-          setError("otp", { type: "server", message });
+          toast.error(message);
+          // setError("otp", { type: "server", message });
         }
       }
     }
@@ -79,12 +82,12 @@ export default function FormOtp() {
       className="flex flex-col gap-8"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div>
+      <div className="flex flex-col items-center gap-2">
         <Text type="Header" variant="Large">
-          Verify Your Account
+          Confirm Your Phone
         </Text>
         <Text type="Body" variant="Medium">
-          Enter the 6-digit code sent to {phoneNumber}
+          We send 6 digits code to {phoneNumber}
         </Text>
       </div>
 

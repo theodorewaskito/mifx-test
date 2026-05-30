@@ -6,28 +6,11 @@ import Image from "next/image";
 import { Spinner } from "../ui/spinner";
 import { useEffect, useState } from "react";
 
-const dataDummy = [ 
-  { 
-    "id": "bitcoin", 
-    "name": "Bitcoin", 
-    "symbol": "BITC", 
-    "image": "https://assets.coingecko.com/coins/images/1/large/bitcoin.png", 
-    "price_idr": "IDR 1.301.632.806,00", 
-    "change_percent": "-4,04%", 
-    "isPositive": false, 
-    "hot": false, 
-    "isFavorite": true, 
-    "type": "cryptocurrency" 
-  } 
-] 
-
 export default function MarketDetail() {
   const {
     isLoading,
     selectedCrypto,
   } = useMarketStore();
-
-  console.log('select', selectedCrypto);
 
   const [imageSrc, setImageSrc] = useState<string>(selectedCrypto?.image || "");
 
@@ -63,7 +46,7 @@ export default function MarketDetail() {
               type="Header"
               variant="Small"
             >
-              {selectedCrypto?.symbol ?? ""} {selectedCrypto?.symbol ? "/ IDR" : ""}
+              {selectedCrypto?.symbol ?? ""}{selectedCrypto?.symbol ? "/IDR" : ""}
             </Text>
             <div className={selectedCrypto?.isPositive ? "text-[#3BB266]" : "text-[#FF4D4F]"}>
               <Text 
