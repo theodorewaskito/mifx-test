@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const authorization = req.headers.get("authorization");
 
     const response = await fetch(
-      "https://fe-technical-assignment.dxtr.asia/api/v1/auth/verify-otp", 
+      `${baseUrl}/auth/verify-otp`, 
       {
         method: "POST",
         headers: {

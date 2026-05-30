@@ -6,7 +6,6 @@ import Tabs from "../common/Tabs";
 import { Search } from 'lucide-react';
 import MarketCard from "./MarketCard";
 import { useEffect, useState } from "react";
-import { STORAGE_KEYS } from "@/constants/storage-key";
 import { useMarketStore, useFilteredList } from "@/store/market.store";
 import { Spinner } from "../ui/spinner"
 import { CryptoItem } from "@/types/index";
@@ -46,14 +45,12 @@ export default function Sidebar() {
 
   const [localQuery, setLocalQuery] = useState<string>(searchQuery);
 
-  // Reset selectedCrypto ke item pertama saat tab berubah
   useEffect(() => {
     if (list && list.length > 0) {
       setSelectedCrypto(list[0]);
     } else {
       setSelectedCrypto({} as CryptoItem);
     }
-    // reset local input when switching tabs
     setLocalQuery("");
   }, [activeTab]);
 

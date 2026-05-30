@@ -1,5 +1,5 @@
 import axios from "axios";
-import { STORAGE_KEYS } from "@/constants/storage-key";
+import { getClientCookie, clearAuthCookies } from "@/lib/cookies";
 import { env } from "process";
 
 export const api = axios.create({
@@ -9,11 +9,10 @@ export const api = axios.create({
   },
 });
 
-// Add request interceptor to include token
 api.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+      const token = getClientCookie('auth_token');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -25,7 +24,6 @@ api.interceptors.request.use(
   }
 );
 
-// Add response interceptor to handle token expiry
 api.interceptors.response.use(
   (response) => {
     return response;
@@ -33,7 +31,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       if (typeof window !== "undefined") {
-        localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+        clearAuthCookies();
         window.location.href = "/login";
       }
     }

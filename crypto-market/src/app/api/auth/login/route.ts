@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     const response = await fetch(
-      "https://fe-technical-assignment.dxtr.asia/api/v1/auth/login",
+      `${baseUrl}/auth/login`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

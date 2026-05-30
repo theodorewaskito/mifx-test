@@ -11,7 +11,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { authService } from "@/services/auth.service";
-import { STORAGE_KEYS } from "@/constants/storage-key";
+import { setAuthTokenCookie, setPhoneNumberCookie, getClientCookie } from "@/lib/cookies";
 import { Spinner } from "@/components/ui/spinner";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -82,11 +82,14 @@ export default function LoginForm({
       const response = await authService.login(payload);
 
       const token = response.data?.token;
+      const phone = response.data?.phone;
 
       console.log(token);
       if (token) {
-        localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, token);
-        localStorage.setItem(STORAGE_KEYS.PHONE_NUMBER, response.data?.phone);
+        setAuthTokenCookie(token);
+        if (phone) {
+          setPhoneNumberCookie(phone);
+        }
       }
 
       router.push("/otp"); 

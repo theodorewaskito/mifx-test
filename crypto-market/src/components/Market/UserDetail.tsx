@@ -3,13 +3,21 @@
 import Text from "@/components/common/Text";
 import Image from "next/image";
 import { LogOut } from 'lucide-react';
+import { useRouter } from "next/navigation";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip" 
-import { STORAGE_KEYS } from "@/constants/storage-key";
+import { clearAuthCookies } from "@/lib/cookies";
+
 export default function UserDetail() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    clearAuthCookies();
+    router.push("/login");
+  };
 
   return (
     <div className="flex justify-between items-center">
@@ -27,11 +35,9 @@ export default function UserDetail() {
           John Johnson
         </Text>
       </div>
-      <button
+      <div
         className="mr-10"
-        onClick={() => {
-          localStorage.clear()
-        }}
+        onClick={handleLogout}
       >
         <Tooltip>
           <TooltipTrigger>
@@ -41,7 +47,7 @@ export default function UserDetail() {
             Sign Out
           </TooltipContent>
         </Tooltip>
-      </button>
+      </div>
     </div>
   );
 }

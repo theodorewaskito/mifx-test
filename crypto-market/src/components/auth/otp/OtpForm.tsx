@@ -13,7 +13,7 @@ import { z } from "zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { STORAGE_KEYS } from "@/constants/storage-key";
+import { setLoginOtpCookie, getClientCookie } from "@/lib/cookies";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner"
 
@@ -29,9 +29,9 @@ export default function FormOtp() {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
 
   useEffect(() => {
-    const phone = localStorage.getItem(STORAGE_KEYS.PHONE_NUMBER);
+    const phone = getClientCookie('phone_number');
     if (phone) {
-      setPhoneNumber(phone);
+      setPhoneNumber(decodeURIComponent(phone));
     }
   }, []);
 
@@ -39,7 +39,6 @@ export default function FormOtp() {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setError,
     reset
   } = useForm<OtpFormValues>({
     resolver: zodResolver(otpSchema),
@@ -50,19 +49,20 @@ export default function FormOtp() {
 
   const onSubmit = async (data: OtpFormValues) => {
     try {
-      const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-
-      const response = await axios.post("/api/auth/otp", {
+      const token = getClientCookie('auth_token');
+      const payload = {
         otp: data.otp,
         phone: phoneNumber,
-      }, {
+      }
+
+      const response = await axios.post("/api/auth/otp", payload, {
         headers: {
           Authorization: `${token}`,
         },
       });
 
       if (response.data?.success) {
-        localStorage.removeItem(STORAGE_KEYS.PHONE_NUMBER);
+        setLoginOtpCookie();
         router.push("/");
       }
     } catch (error) {

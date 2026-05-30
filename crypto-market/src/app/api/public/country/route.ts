@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const apiBaseUrl = "https://fe-technical-assignment.dxtr.asia/api/v1/countries";
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const apiBaseUrl = `${baseUrl}/countries`;
 
     const response = await fetch(`${apiBaseUrl}`, {
       method: "GET",

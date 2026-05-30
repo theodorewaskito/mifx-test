@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const authorization = req.headers.get("authorization");
 
     const response = await fetch(
-      "https://fe-technical-assignment.dxtr.asia/api/v1/list-crypto", 
+      `${baseUrl}/list-crypto`, 
       {
         method: "GET",
         headers: {

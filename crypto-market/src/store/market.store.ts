@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { useMemo } from "react";
 import { CryptoItem } from "@/types/index";
+import { getClientCookie } from "@/lib/cookies";
 
 type TabFilter = "all" | "cryptocurrency" | "favorite";
 
@@ -40,7 +41,7 @@ export const useMarketStore = create<MarketState>((set) => ({
   fetchCryptoList: async () => {
     set({ isLoading: true });
     try {
-      const token = localStorage.getItem("auth_token");
+      const token = getClientCookie("auth_token");
       const response = await fetch("/api/private/market", {
         headers: { Authorization: `${token}` },
       });
