@@ -1,8 +1,15 @@
+"use client"
+
 import Text from "../common/Text";
 import Input from "../form/Input";
 import Tabs from "../common/Tabs";
 import { Search } from 'lucide-react';
 import MarketCard from "./MarketCard";
+import { useEffect, useState } from "react";
+import { STORAGE_KEYS } from "@/constants/storage-key";
+import { useMarketStore, useFilteredList } from "@/store/market.store";
+import { Spinner } from "../ui/spinner"
+import { CryptoItem } from "@/types/index";
 
 const tabsValue = [
   {
@@ -19,25 +26,47 @@ const tabsValue = [
   },
 ]
 
-const dataDummy = [ 
-  { 
-    "id": "bitcoin", 
-    "name": "Bitcoin", 
-    "symbol": "BITC", 
-    "image": "https://assets.coingecko.com/coins/images/1/large/bitcoin.png", 
-    "price_idr": "IDR 1.301.632.806,00", 
-    "change_percent": "-4,04%", 
-    "isPositive": false, 
-    "hot": false, 
-    "isFavorite": true, 
-    "type": "cryptocurrency" 
-  } 
-] 
-
 export default function Sidebar() {
+  const {
+    isLoading,
+    selectedCrypto,
+    searchQuery,
+    activeTab,
+    fetchCryptoList,
+    setSelectedCrypto,
+    setSearchQuery,
+    setActiveTab,
+  } = useMarketStore();
+
+  useEffect(() => {
+    fetchCryptoList();
+  }, []);
+
+  const list = useFilteredList();
+
+  const [localQuery, setLocalQuery] = useState<string>(searchQuery);
+
+  // Reset selectedCrypto ke item pertama saat tab berubah
+  useEffect(() => {
+    if (list && list.length > 0) {
+      setSelectedCrypto(list[0]);
+    } else {
+      setSelectedCrypto({} as CryptoItem);
+    }
+    // reset local input when switching tabs
+    setLocalQuery("");
+  }, [activeTab]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearchQuery(localQuery);
+    }, 400);
+
+    return () => clearTimeout(handler);
+  }, [localQuery]);
 
   return (
-    <div className="w-94.75 bg-[#F5F5F5]">
+    <div className="min-w-94.75 bg-[#F5F5F5] h-full">
       <div className="flex flex-col p-4 gap-2">
         <Text
           type="Title"
@@ -49,12 +78,10 @@ export default function Sidebar() {
           id="password"
           type={"text"}
           placeholder="Search"
+          value={localQuery}
+          onChange={(e) => setLocalQuery(e.target.value)}
           trailingIcon={
-            <button
-              type="submit"
-              // onClick={() =)}
-              className="flex items-center justify-center"
-            >
+            <button>
               <Search />
             </button>
           }
@@ -64,19 +91,45 @@ export default function Sidebar() {
       <div className="flex flex-col gap-4 px-4">
 
         <Tabs 
-          defaultValue="cryptocurrency" 
-          tabsValue={tabsValue} 
+          defaultValue={activeTab}
+          tabsValue={tabsValue}
+          onValueChange={(val) => setActiveTab(val as any)} 
         />
 
+        <div className="overflow-y-auto h-[calc(100vh-170px)] flex flex-col gap-3">
         {
-          dataDummy?.map((item) => (
-            <MarketCard 
-              key={item.id} 
-              data={item} 
-              // chosen={item.isFavorite} 
-            />
-          ))
+          isLoading ? (
+            <div className="flex items-center justify-center">
+              <Spinner className="size-20"/>
+            </div>
+          ) : (
+            <>
+              {
+                list && list.length > 0 ? (
+                  list.map((item) => (
+                    <MarketCard
+                      key={item.id}
+                      data={item}
+                      chosen={selectedCrypto?.id === item.id}
+                      onSelect={() => setSelectedCrypto(item)}
+                    />
+                  ))
+                ) : (
+                  (searchQuery?.trim() ? (
+                    <div className="p-6 text-center text-sm text-[#666]">
+                      {`We couldn’t find ‘${searchQuery}.’ Try searching with a different keyword.`}
+                    </div>
+                  ) : (
+                    <div className="p-6 text-center text-sm text-[#666]">
+                      No markets found.
+                    </div>
+                  ))
+                )
+              }
+            </>
+          )
         }
+        </div>
 
       </div>
 

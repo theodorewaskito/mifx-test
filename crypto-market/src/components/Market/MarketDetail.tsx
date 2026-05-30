@@ -1,5 +1,10 @@
+"use client"
+
 import Text from "@/components/common/Text";
+import { useMarketStore } from "@/store/market.store";
 import Image from "next/image";
+import { Spinner } from "../ui/spinner";
+import { useEffect, useState } from "react";
 
 const dataDummy = [ 
   { 
@@ -17,6 +22,22 @@ const dataDummy = [
 ] 
 
 export default function MarketDetail() {
+  const {
+    isLoading,
+    selectedCrypto,
+  } = useMarketStore();
+
+  console.log('select', selectedCrypto);
+
+  const [imageSrc, setImageSrc] = useState<string>(selectedCrypto?.image || "");
+
+  useEffect(() => {
+    if (selectedCrypto?.image) {
+      setImageSrc(selectedCrypto.image);
+    } else {
+      setImageSrc("/dummy-crypto.png");
+    }
+  }, [selectedCrypto]); 
 
   return (
     <div className="flex flex-col gap-4">
@@ -26,34 +47,44 @@ export default function MarketDetail() {
       >
         Welcome to Trading Dashboard
       </Text>
-      <div className="flex gap-2 items-center">
-        <Image
-          src={dataDummy[0].image}
-          alt="Market Brand"
-          width={40}
-          height={40}
-        />
-        <Text 
-          type="Header"
-          variant="Small"
-        >
-          BTC/USDT
-        </Text>
-        <div className="text-[#3BB266]">
-          <Text 
-            type="Body"
-            variant="Large"
-          >
-            36 453,9
-          </Text>
-          <Text 
-            type="Body"
-            variant="Large"
-          >
-            +3.12%
-          </Text>
-        </div>
-      </div>
+      {
+        !isLoading ? (
+          <div className="flex gap-2 items-center">
+            {imageSrc && (
+              <Image
+                src={imageSrc}
+                alt="Market Brand"
+                width={40}
+                height={40}
+                // onError={() => setImageSrc("/dummy-crypto.png")}
+              />
+            )}
+            <Text 
+              type="Header"
+              variant="Small"
+            >
+              {selectedCrypto?.symbol ?? ""} {selectedCrypto?.symbol ? "/ IDR" : ""}
+            </Text>
+            <div className={selectedCrypto?.isPositive ? "text-[#3BB266]" : "text-[#FF4D4F]"}>
+              <Text 
+                type="Body"
+                variant="Large"
+              >
+                {selectedCrypto?.price_idr?.replace("IDR ", "") ?? ""}
+              </Text>
+              <Text 
+                type="Body"
+                variant="Large"
+              >
+                {selectedCrypto?.change_percent ?? ""}
+              </Text>
+            </div>
+          </div>
+        ) : (
+          <Spinner className="size-20" />
+        )
+      }
+
     </div>
   );
 }

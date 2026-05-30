@@ -62,7 +62,7 @@ export default function FormOtp() {
       if (response.data?.success) {
         // ✅ Token sudah ada dari login, tidak perlu di-set ulang
         // Langsung redirect
-        router.push("/market");
+        router.push("/");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -11,16 +11,18 @@ export interface ITabs {
     value: string;
     label: string;
   }[]
+  onValueChange?: (value: string) => void;
 }
 
 export default function Button({
   defaultValue,
   tabsValue = [],
+  onValueChange,
 }: ITabs) {
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
-      <TabsUI defaultValue={defaultValue}>
+      <TabsUI defaultValue={defaultValue} onValueChange={onValueChange}>
         <TabsList variant="line">
           {
             tabsValue.map((tabsValue) => (
